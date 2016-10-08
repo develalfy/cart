@@ -77,6 +77,43 @@ class DefaultController extends Controller
 
 
     /**
+     * @Route("/edit/{itemId}", name="edit_item_get")
+     * @Method("GET")
+     * @param $itemId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function editItemGet($itemId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('AppBundle:Item')->find($itemId);
+
+        return $this->render('cart/edit.html.twig', [
+            'item' => $item,
+        ]);
+    }
+
+
+    /**
+     * @Route("/edit/{itemId}", name="edit_item_post")
+     * @Method("POST")
+     * @param $itemId
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @internal param $itemId
+     */
+    public function editItemPost($itemId, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('AppBundle:Item')->find($itemId);
+
+        $item->setTitle($request->get('title'));
+        $em->flush();
+
+        return $this->redirectToRoute('list_items');
+    }
+
+
+    /**
      * @Route("/empty", name="empty_cart")
      * @Method("GET")
      */

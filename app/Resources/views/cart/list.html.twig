@@ -6,10 +6,20 @@
         <a href="{{ path("add_item_get") }}">Add item</a> - <a href="{{ path("empty_cart") }}" onclick="confirmEmptyCart(event)">Empty cart</a>
     </div>
     <div>
-        <ul>
+        <table border="1 solid">
+            <tr>
+                <th>Element</th>
+                <th>Action</th>
+            </tr>
             {% for item in items %}
-                <li>{{ item.title }} - <a href="{{ path('delete_item', {'itemId' : item.id}) }}">Delete</a></li>
+            <tr>
+                <td>{{ item.title }}</td>
+                <td><a href="{{ path('edit_item_get', {'itemId' : item.id}) }}">Edit</a> - <a href="{{ path('delete_item', {'itemId' : item.id}) }}">Delete</a></td>
+            </tr>
             {% endfor %}
+        </table>
+        <ul>
+
         </ul>
     </div>
 

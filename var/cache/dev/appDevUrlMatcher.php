@@ -151,6 +151,45 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
         not_delete_item:
 
+        if (0 === strpos($pathinfo, '/e')) {
+            if (0 === strpos($pathinfo, '/edit')) {
+                // edit_item_get
+                if (preg_match('#^/edit/(?P<itemId>[^/]++)$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_edit_item_get;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_item_get')), array (  '_controller' => 'AppBundle\\Controller\\DefaultController::editItemGet',));
+                }
+                not_edit_item_get:
+
+                // edit_item_post
+                if (preg_match('#^/edit/(?P<itemId>[^/]++)$#s', $pathinfo, $matches)) {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_edit_item_post;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_item_post')), array (  '_controller' => 'AppBundle\\Controller\\DefaultController::editItemPost',));
+                }
+                not_edit_item_post:
+
+            }
+
+            // empty_cart
+            if ($pathinfo === '/empty') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_empty_cart;
+                }
+
+                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::emptyCart',  '_route' => 'empty_cart',);
+            }
+            not_empty_cart:
+
+        }
+
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
 }

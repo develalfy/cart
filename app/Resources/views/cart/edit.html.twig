@@ -1,0 +1,16 @@
+{% extends('main.html.twig') %}
+
+{% block body %}
+    <h1>Edit item</h1>
+    <div>
+        <form action="{{ path('edit_item_post', {'itemId':item.id}) }}" method="post">
+            <b>Title:</b><input type="text" name="title" id="title" value="{{ item.title }}">
+            <br>
+            <button type="submit">Edit item</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block title %}
+    Edit | Cart
+{% endblock %}
