@@ -254,3 +254,7 @@ d16620,127.0.0.1,GET,http://localhost:8000/,1475930657,,200
 8ab80b,127.0.0.1,GET,http://localhost:8000/add,1475930662,,200
 b6da05,127.0.0.1,POST,http://localhost:8000/add,1475930664,,302
 f0397f,127.0.0.1,GET,http://localhost:8000/,1475930664,,200
+f09771,127.0.0.1,GET,http://localhost:8000/,1475931254,,200
+117a25,127.0.0.1,GET,http://localhost:8000/add,1475931257,,200
+00f691,127.0.0.1,POST,http://localhost:8000/add,1475931259,,302
+9380c3,127.0.0.1,GET,http://localhost:8000/,1475931259,,200
