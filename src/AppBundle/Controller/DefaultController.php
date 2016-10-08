@@ -74,4 +74,24 @@ class DefaultController extends Controller
         
         return $this->redirectToRoute('list_items');
     }
+
+
+    /**
+     * @Route("/empty", name="empty_cart")
+     * @Method("GET")
+     */
+    public function emptyCart()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $items = $em->getRepository("AppBundle:Item")->findAll();
+
+        // delete all items
+        foreach ($items as $item) {
+            $em->remove($item);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('list_items');
+    }
 }

@@ -3,12 +3,27 @@
 {% block body %}
     <h1>Items</h1>
     <div>
+        <a href="{{ path("add_item_get") }}">Add item</a> - <a href="{{ path("empty_cart") }}" onclick="confirmEmptyCart(event)">Empty cart</a>
+    </div>
+    <div>
         <ul>
             {% for item in items %}
                 <li>{{ item.title }} - <a href="{{ path('delete_item', {'itemId' : item.id}) }}">Delete</a></li>
             {% endfor %}
         </ul>
     </div>
+
+    <script>
+        function confirmEmptyCart(e){
+            var msg = confirm("You'll empty your cart, are you sure ?!");
+            if (msg == true){
+                return true;
+            } else {
+                e.preventDefault();
+            }
+        }
+    </script>
+
 {% endblock %}
 
 {% block title %}
