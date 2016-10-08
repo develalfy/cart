@@ -115,6 +115,42 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
         not_list_items:
 
+        if (0 === strpos($pathinfo, '/add')) {
+            // add_item_get
+            if ($pathinfo === '/add') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_add_item_get;
+                }
+
+                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::addItemGet',  '_route' => 'add_item_get',);
+            }
+            not_add_item_get:
+
+            // add_item_post
+            if ($pathinfo === '/add') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_add_item_post;
+                }
+
+                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::addItemPost',  '_route' => 'add_item_post',);
+            }
+            not_add_item_post:
+
+        }
+
+        // delete_item
+        if (0 === strpos($pathinfo, '/delete') && preg_match('#^/delete/(?P<itemId>[^/]++)$#s', $pathinfo, $matches)) {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not_delete_item;
+            }
+
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_item')), array (  '_controller' => 'AppBundle\\Controller\\DefaultController::deleteItem',));
+        }
+        not_delete_item:
+
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
 }

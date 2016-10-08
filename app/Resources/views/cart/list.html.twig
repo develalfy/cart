@@ -1,12 +1,16 @@
 {% extends("main.html.twig") %}
-{% block title %}List | Cart{% endblock %}
+
 {% block body %}
     <h1>Items</h1>
     <div>
         <ul>
             {% for item in items %}
-                <li>{{ item.title }}</li>
+                <li>{{ item.title }} - <a href="{{ path('delete_item', {'itemId' : item.id}) }}">Delete</a></li>
             {% endfor %}
         </ul>
     </div>
+{% endblock %}
+
+{% block title %}
+    List | Cart
 {% endblock %}

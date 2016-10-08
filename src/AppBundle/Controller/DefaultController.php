@@ -27,4 +27,51 @@ class DefaultController extends Controller
         ]);
     }
 
+
+    /**
+     * @Route("/add", name="add_item_get")
+     * @Method("GET")
+     */
+    public function addItemGet()
+    {
+        return $this->render('cart/add.html.twig');
+    }
+
+
+    /**
+     * @Route("/add", name="add_item_post")
+     * @Method("POST")
+     * @param Request $request
+     * @return Response
+     */
+    public function addItemPost(Request $request)
+    {
+        $item = new Item();
+        $item->setTitle($request->get('title'));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($item);
+        $em->flush();
+
+        return $this->redirectToRoute('list_items');
+    }
+
+
+    /**
+     * @Route("/delete/{itemId}", name="delete_item")
+     * @Method("GET")
+     * @param $itemId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteItem($itemId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository('AppBundle:Item')->find($itemId);
+
+        $em->remove($item);
+        $em->flush();
+        
+        return $this->redirectToRoute('list_items');
+    }
 }

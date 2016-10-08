@@ -1,0 +1,16 @@
+{% extends("main.html.twig") %}
+
+{% block body %}
+    <h1>Add item</h1>
+    <div>
+        <form action="{{ path('add_item_post') }}" method="post">
+            <b>Title:</b><input type="text" name="title" id="title">
+            <br>
+            <button type="submit">Add item</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block title %}
+    Add | Cart
+{% endblock %}
