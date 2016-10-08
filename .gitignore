@@ -1,0 +1,9 @@
+.idea
+/composer.json
+var/cache/dev/annotations/60/
+var/cache/dev/annotations/ac/
+var/cache/dev/doctrine/
+var/cache/dev/profiler/1c/
+var/cache/dev/profiler/b7/
+var/sessions/dev/
+vendor/doctrine/orm/docs/en/_theme/
